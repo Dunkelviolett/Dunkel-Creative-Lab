@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darnassus (Facción) - Wiki Template</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        wikiDark: '#121212',
+                        wikiSidebar: '#18181b',
+                        wikiCard: '#1e1e24',
+                        wikiBorder: '#2d2d35',
+                        wikiGold: '#d4af37',
+                        wikiGoldHover: '#e6c547',
+                        wikiLink: '#3b82f6',
+                        wikiLinkDark: '#60a5fa'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilos personalizados tipo Wiki para tablas y bloques */
+        .wiki-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.875rem;
+        }
+        .wiki-table th, .wiki-table td {
+            border: 1px solid #3f3f46;
+            padding: 6px 10px;
+        }
+    </style>
+</head>
+<body class="bg-wikiDark text-zinc-200 min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- 1. BARRA SUPERIOR GLOBAL (wiki.gg style) -->
+    <header class="bg-black border-b border-zinc-800 h-12 flex items-center justify-between px-4 z-30 sticky top-0">
+        <div class="flex items-center space-x-4">
+            <button id="sidebarToggle" class="text-zinc-400 hover:text-white text-lg focus:outline-none md:hidden">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="flex items-center space-x-2">
+                <span class="text-wikiGold font-bold text-lg tracking-wider">wiki.gg</span>
+                <span class="text-zinc-500 text-sm hidden sm:inline">|</span>
+                <span class="text-xs bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded border border-zinc-700 hidden sm:inline">Warcraft Universe</span>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <!-- Buscador -->
+            <div class="relative hidden md:block w-64">
+                <input type="text" id="searchInput" placeholder="Search Warcraft Wiki" class="w-full bg-zinc-900 text-sm text-zinc-200 pl-3 pr-8 py-1 rounded border border-zinc-700 focus:outline-none focus:border-wikiGold">
+                <i class="fa-solid fa-magnifying-glass absolute right-2.5 top-2 text-zinc-400 text-xs"></i>
+            </div>
+            <!-- Botón Modo Oscuro/Claro -->
+            <button id="themeToggle" class="text-zinc-400 hover:text-white p-2 rounded transition-colors" title="Cambiar Tema">
+                <i class="fa-solid fa-moon" id="themeIcon"></i>
+            </button>
+            <a href="#" class="text-xs font-semibold text-zinc-300 hover:text-white hidden sm:inline">Create account</a>
+            <a href="#" class="text-xs bg-wikiGold hover:bg-wikiGoldHover text-black font-bold px-3 py-1.5 rounded transition-colors">Log in</a>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="flex flex-1 relative">
+
+        <!-- 2. BARRA LATERAL IZQUIERDA -->
+        <aside id="sidebar" class="w-64 bg-wikiSidebar border-r border-zinc-800 flex-shrink-0 flex flex-col hidden md:flex z-20 transition-all duration-300">
+            <!-- Logo / Cabecera Wiki -->
+            <div class="p-4 flex flex-col items-center border-b border-zinc-800 bg-gradient-to-b from-zinc-900 to-wikiSidebar">
+                <div class="w-20 h-20 rounded-full border-2 border-wikiGold flex items-center justify-center bg-zinc-950 shadow-lg mb-2">
+                    <i class="fa-solid fa-shield-halved text-wikiGold text-3xl"></i>
+                </div>
+                <h1 class="font-bold text-white text-base tracking-wide">WARCRAFT WIKI</h1>
+            </div>
+
+            <!-- Menú de Navegación -->
+            <div class="p-4 space-y-6 text-sm overflow-y-auto flex-1">
+                <div>
+                    <p class="text-xs font-bold text-wikiGold uppercase tracking-wider mb-2">Navigation</p>
+                    <ul class="space-y-1.5 text-zinc-400">
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Main page</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Recent changes</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Random article</a></li>
+                    </ul>
+                    <div class="mt-3">
+                        <a href="#" class="flex items-center justify-center space-x-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs py-1.5 px-3 rounded font-medium transition-colors">
+                            <i class="fa-brands fa-discord"></i>
+                            <span>Wiki Discord</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-xs font-bold text-wikiGold uppercase tracking-wider mb-2">Wiki community</p>
+                    <ul class="space-y-1.5 text-zinc-400">
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">About Warcraft Wiki</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Community portal</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Policies</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Things to do</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Village pump</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <p class="text-xs font-bold text-wikiGold uppercase tracking-wider mb-2">World of Warcraft</p>
+                    <ul class="space-y-1.5 text-zinc-400">
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Midnight</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Forever</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">MoP Classic</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">BC Classic</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Season of Discovery</a></li>
+                        <li><a href="#" class="hover:text-white block py-0.5 transition-colors">Interface customization</a></li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 3. CONTENIDO PRINCIPAL -->
+        <main class="flex-1 flex flex-col min-w-0 bg-wikiDark">
+            
+            <!-- Barra de Pestañas del Artículo (Page / Discussion) + Acciones -->
+            <div class="bg-zinc-900 border-b border-zinc-800 px-6 flex flex-wrap items-center justify-between text-sm">
+                <div class="flex space-x-1">
+                    <button onclick="switchTab('page')" id="tabPageBtn" class="px-4 py-2 font-medium border-b-2 border-wikiGold text-white bg-wikiDark transition-colors">Page</button>
+                    <button onclick="switchTab('discussion')" id="tabDiscBtn" class="px-4 py-2 font-medium border-b-2 border-transparent text-zinc-400 hover:text-white transition-colors">Discussion</button>
+                </div>
+                <div class="flex items-center space-x-4 py-2 text-xs font-medium text-zinc-300">
+                    <a href="#" class="hover:text-wikiGold transition-colors">Read</a>
+                    <a href="#" class="hover:text-wikiGold transition-colors flex items-center space-x-1">
+                        <i class="fa-solid fa-pen text-[10px]"></i>
+                        <span>Sign up to edit</span>
+                    </a>
+                    <div class="relative group cursor-pointer">
+                        <span class="hover:text-wikiGold flex items-center space-x-1"><span>More</span> <i class="fa-solid fa-angle-down text-[10px]"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor dinámico de Pestañas -->
+            <div class="p-6 md:p-8 flex-1 max-w-5xl">
+
+                <!-- PESTAÑA 1: CONTENIDO DE LA PÁGINA -->
+                <div id="tabPageContent" class="space-y-6">
+                    <!-- Título del Artículo -->
+                    <h1 class="text-3xl md:text-4xl font-serif font-normal text-zinc-100 border-b border-zinc-800 pb-3">
+                        Darnassus <span class="text-lg font-sans font-light text-zinc-400">(faction)</span>
+                    </h1>
+
+                    <!-- Tabla de reputación superior (estilo wiki) -->
+                    <div class="overflow-x-auto">
+                        <table class="wiki-table text-center">
+                            <tr>
+                                <th colspan="2" class="bg-zinc-900 text-wikiGold font-semibold text-xs tracking-wider">Reputation factions in World of Warcraft</th>
+                            </tr>
+                            <tr>
+                                <td class="bg-blue-950/40 text-blue-300 font-medium w-1/2">
+                                    Darnassus • Exodar • Gilneas • Gnomeregan<br>Ironforge • Obsidian Warders • Stormwind • Tushui Pandaren
+                                </td>
+                                <td class="bg-red-950/40 text-red-300 font-medium w-1/2">
+                                    Bilgewater Cartel • Dark Talons • Darkspear Trolls • Huojin Pandaren<br>Orgrimmar • Silvermoon City • Thunder Bluff • Undercity
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Nota de desambiguación -->
+                    <div class="italic text-xs md:text-sm text-zinc-400 border-l-2 border-wikiGold pl-3 py-1 space-y-1">
+                        <p>This article is about the in-game faction. For the kaldorei nation, see <a href="#" class="text-wikiLinkDark underline">Darnassus (nation)</a>. For other uses, see <a href="#" class="text-wikiLinkDark underline">Darnassus (disambiguation)</a>.</p>
+                        <p class="text-zinc-500">"This Alliance capital is populated by Night Elves and is located in the island of Teldrassil. Ruled by the Priestess of the Moon, Tyrande Whisperwind." <br><span class="not-italic">— Reputation description</span></p>
+                    </div>
+
+                    <!-- Layout dividendo contenido y cuadro de info lateral -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start relative">
+                        
+                        <!-- Columna de texto principal (2 columnas en desktop) -->
+                        <div class="lg:col-span-2 space-y-6 text-sm md:text-base text-zinc-300 leading-relaxed">
+                            <p>
+                                <strong class="text-white">Darnassus</strong> is the <a href="#" class="text-wikiLinkDark underline">faction</a> associated with the playable <a href="#" class="text-wikiLinkDark underline">night elves</a> of the <a href="#" class="text-wikiLinkDark underline">Alliance</a>. Their capital was once <a href="#" class="text-wikiLinkDark underline">Darnassus</a> at the top of <a href="#" class="text-wikiLinkDark underline">Teldrassil</a>. It has since been replaced by <a href="#" class="text-wikiLinkDark underline">Bel'ameth</a> on the <a href="#" class="text-wikiLinkDark underline">Dragon Isles</a>.
+                            </p>
+
+                            <!-- Sección 1 -->
+                            <section class="space-y-3 pt-2">
+                                <h2 class="text-2xl font-serif font-normal text-zinc-100 border-b border-zinc-800 pb-1">Reputation</h2>
+                                <p>
+                                    The zones of <a href="#" class="text-wikiLinkDark underline">Teldrassil</a>, <a href="#" class="text-wikiLinkDark underline">Darkshore</a>, <a href="#" class="text-wikiLinkDark underline">Ashenvale</a>, <a href="#" class="text-wikiLinkDark underline">Stonetalon Mountains</a>, <a href="#" class="text-wikiLinkDark underline">Feralas</a> and <a href="#" class="text-wikiLinkDark underline">Thousand Needles</a> offer many quests for gaining <a href="#" class="text-wikiLinkDark underline">reputation</a> with Darnassus.
+                                </p>
+                                <p>
+                                    Daily cooking and fishing quests that reward reputation are available in Darnassus. The fishing daily is given by <a href="#" class="text-wikiLinkDark underline">Astarii</a> [48.8, 61.0] in the <a href="#" class="text-wikiLinkDark underline">Temple Gardens</a>. The cooking daily is given by <a href="#" class="text-wikiLinkDark underline">Alegorn</a> [50.0, 36.6] in the <a href="#" class="text-wikiLinkDark underline">Craftsmen's Terrace</a>.
+                                </p>
+                                <p>
+                                    The <span class="text-wikiGold font-medium">Darnassus Quartermaster</span> is <a href="#" class="text-wikiLinkDark underline">Moon Priestess Lasara</a> [36.6, 49.0], located in Darnassus at the flight path, just off to the side of the entrance portal into the city. At all reputation levels, she sells the <span class="text-emerald-400 font-semibold">[Darnassus Tabard]</span>, which can be used to champion Darnassus for extra reputation in dungeons.
+                                </p>
+                            </section>
+                        </div>
+
+                        <!-- 4. CUADRO DE INFORMACIÓN LATERAL (INFOBOX) -->
+                        <div class="lg:col-span-1 bg-wikiCard border border-zinc-700 rounded-lg overflow-hidden shadow-xl text-xs">
+                            <!-- Cabecera Infobox -->
+                            <div class="bg-gradient-to-r from-blue-950 via-zinc-900 to-blue-950 p-2.5 text-center border-b border-zinc-700">
+                                <span class="text-wikiGold text-lg font-serif tracking-wide block font-bold">Darnassus</span>
+                                <span class="text-[11px] text-zinc-400 uppercase tracking-widest font-semibold">Icon of Wisdom</span>
+                            </div>
+
+                            <!-- Imagen Representativa -->
+                            <div class="p-3 bg-zinc-950 flex justify-center border-b border-zinc-700">
+                                <div class="w-full h-56 bg-zinc-900 rounded border border-zinc-800 flex flex-col items-center justify-center relative overflow-hidden group">
+                                    <!-- Ilustración simulada en SVG con escudo estilo nocturno -->
+                                    <svg class="w-36 h-36 text-purple-400 group-hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(168,85,247,0.4)]" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2L4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3zm0 2.18l6 2.25v4.57c0 4.45-3.11 8.65-6 9.85-2.89-1.2-6-5.4-6-9.85V6.43l6-2.25z"/>
+                                        <path d="M12 7a4 4 0 100 8 4 4 0 000-8z" opacity="0.3"/>
+                                    </svg>
+                                    <span class="absolute bottom-2 text-[10px] bg-black/60 px-2 py-0.5 rounded text-zinc-300 border border-zinc-800">Cresta Darnassus</span>
+                                </div>
+                            </div>
+
+                            <!-- Detalles de la Tabla Info -->
+                            <div class="p-3 space-y-2">
+                                <div class="flex justify-between border-b border-zinc-800 pb-1.5">
+                                    <span class="text-zinc-400 font-medium">Filiation:</span>
+                                    <span class="text-white text-right">The Alliance</span>
+                                </div>
+                                <div class="flex justify-between border-b border-zinc-800 pb-1.5">
+                                    <span class="text-zinc-400 font-medium">Race:</span>
+                                    <span class="text-white text-right">Night Elf (Kaldorei)</span>
+                                </div>
+                                <div class="flex justify-between border-b border-zinc-800 pb-1.5">
+                                    <span class="text-zinc-400 font-medium">Capital:</span>
+                                    <span class="text-white text-right">Darnassus / Bel'ameth</span>
+                                </div>
+                                <div class="flex justify-between border-b border-zinc-800 pb-1.5">
+                                    <span class="text-zinc-400 font-medium">Leader:</span>
+                                    <span class="text-white text-right">Tyrande Whisperwind</span>
+                                </div>
+                                <div class="flex justify-between pb-0.5">
+                                    <span class="text-zinc-400 font-medium">Status:</span>
+                                    <span class="text-emerald-400 font-semibold text-right">Active Faction</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- PESTAÑA 2: DISCUSIÓN -->
+                <div id="tabDiscContent" class="hidden space-y-6">
+                    <h1 class="text-3xl font-serif text-zinc-100 border-b border-zinc-800 pb-3">Discussion: Darnassus</h1>
+                    <p class="text-sm text-zinc-400">Esta es la página de discusión para debatir cambios y aportes sobre este artículo de la wiki.</p>
+                    
+                    <!-- Simulación de comentario de wiki -->
+                    <div class="bg-wikiCard border border-zinc-700 rounded-lg p-4 space-y-3">
+                        <div class="flex items-center justify-between text-xs text-zinc-400 border-b border-zinc-800 pb-2">
+                            <span class="font-bold text-wikiGold"><i class="fa-solid fa-user-circle mr-1"></i> NightSlayer99</span>
+                            <span>18 de Octubre de 2026, 15:42</span>
+                        </div>
+                        <p class="text-sm text-zinc-300">¿Alguien sabe si las misiones diarias de cocina de Darnassus siguen dando la misma cantidad de reputación en las versiones recientes de Classic? Deberíamos actualizar las coordenadas.</p>
+                        <button class="text-xs text-wikiLinkDark hover:underline"><i class="fa-solid fa-reply mr-1"></i> Responder</button>
+                    </div>
+
+                    <!-- Formulario nuevo comentario -->
+                    <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-4 space-y-3">
+                        <h3 class="text-sm font-semibold text-white">Dejar un comentario en la discusión</h3>
+                        <textarea rows="3" placeholder="Escribe tu mensaje..." class="w-full bg-wikiDark border border-zinc-700 rounded p-2 text-sm text-zinc-200 focus:outline-none focus:border-wikiGold"></textarea>
+                        <button class="bg-wikiGold hover:bg-wikiGoldHover text-black text-xs font-bold px-4 py-2 rounded transition-colors">Publicar comentario</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Pie de página tipo Wiki -->
+            <footer class="mt-auto border-t border-zinc-800 bg-black py-4 px-6 text-center text-xs text-zinc-500 space-y-1">
+                <p>Esta página fue editada por última vez el 18 oct 2026, a las 20:33.</p>
+                <p>El contenido está disponible bajo la licencia <a href="#" class="underline hover:text-zinc-400">Creative Commons Attribution-ShareAlike</a> a menos que se indique lo contrario.</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- SCRIPT DE INTERACTIVIDAD -->
+    <script>
+        // 1. Control de pestañas (Page / Discussion)
+        function switchTab(tab) {
+            const pageBtn = document.getElementById('tabPageBtn');
+            const discBtn = document.getElementById('tabDiscBtn');
+            const pageContent = document.getElementById('tabPageContent');
+            const discContent = document.getElementById('tabDiscContent');
+
+            if (tab === 'page') {
+                pageBtn.className = "px-4 py-2 font-medium border-b-2 border-wikiGold text-white bg-wikiDark transition-colors";
+                discBtn.className = "px-4 py-2 font-medium border-b-2 border-transparent text-zinc-400 hover:text-white transition-colors";
+                pageContent.classList.remove('hidden');
+                discContent.classList.add('hidden');
+            } else {
+                discBtn.className = "px-4 py-2 font-medium border-b-2 border-wikiGold text-white bg-wikiDark transition-colors";
+                pageBtn.className = "px-4 py-2 font-medium border-b-2 border-transparent text-zinc-400 hover:text-white transition-colors";
+                discContent.classList.remove('hidden');
+                pageContent.classList.add('hidden');
+            }
+        }
+
+        // 2. Toggle de la barra lateral en dispositivos móviles
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+        });
+
+        // 3. Sistema de cambio de Tema Oscuro / Claro
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                // Ajustes sencillos para modo claro dinámico
+                document.body.style.backgroundColor = '#f4f4f5';
+                document.body.style.color = '#18181b';
+            } else {
+                htmlElement.classList.add('dark');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                document.body.style.backgroundColor = '#121212';
+                document.body.style.color = '#e4e4e7';
+            }
+        });
+    </script>
+</body>
+</html>
